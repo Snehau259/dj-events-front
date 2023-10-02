@@ -4,6 +4,7 @@ export default function index() {
   return (
     <div>
       <p>this is the events page</p>
+      <a href='/'>Home</a>
     </div>
   )
 }
