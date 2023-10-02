@@ -1,11 +1,16 @@
 import React from 'react'
 import Link from 'next/link'
+import Layout from '../components/layout'
+import '../styles/globals.css'
+
 
 export default function About() {
   return (
-    <div>
+
+    <Layout title='about' description='this is about page'>
       <p>About</p>
       <Link href='/events/2000'>event-1</Link>
-    </div>
+    </Layout>
+
   )
 }
