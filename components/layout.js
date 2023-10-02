@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import Header from './header'
+import Footer from './footer'
 
 
 
@@ -14,6 +15,7 @@ export default function Layout({title,description,keywords,children}) {
     </Head>
     <Header/>
     {children}
+    <Footer/>
     </div>
   )
 }
