@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import '../../styles/globals.css'
+//import '../../styles/globals.css'
 
 export default function Id() {
   const router=useRouter()

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import Layout from '../components/layout'
-import '../styles/globals.css'
+//import '../styles/globals.css'
 
 export default function Index() {
   return (
