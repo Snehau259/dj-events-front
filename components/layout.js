@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Header from './header'
 import Footer from './footer'
+import Showcase from './showcase'
 
 
 
@@ -14,6 +15,7 @@ export default function Layout({title,description,keywords,children}) {
     <meta name='keywords' content={keywords}/>
     </Head>
     <Header/>
+    <Showcase/>
     {children}
     <Footer/>
     </div>
