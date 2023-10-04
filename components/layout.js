@@ -3,10 +3,13 @@ import React from 'react'
 import Header from './header'
 import Footer from './footer'
 import Showcase from './showcase'
+import Router, { useRouter } from 'next/router'
+
 
 
 
 export default function Layout({title,description,keywords,children}) {
+  const router=useRouter()
   return (
     <div>
     <Head >
@@ -15,7 +18,8 @@ export default function Layout({title,description,keywords,children}) {
     <meta name='keywords' content={keywords}/>
     </Head>
     <Header/>
-    <Showcase/>
+
+    {router.pathname=='/' && <Showcase/>}
     {children}
     <Footer/>
     </div>
