@@ -6,6 +6,7 @@ import styles from '@/styles/eventitem.module.css'
 //import events from '@/pages/api/events'
 
 export default function Eventitem({ evt }) {
+ // console.log()
   return (
     <div className={styles.event}>
       <div className={styles.image}>
@@ -16,7 +17,7 @@ export default function Eventitem({ evt }) {
         <h5>{evt.name}</h5></div>
       <div className={styles.link}>
         <Link className='btn' href={`/events/${evt.slug}`}>
-        Details
+          Details
         </Link>
       </div>
     </div>

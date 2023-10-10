@@ -22,14 +22,17 @@ export async function getStaticPaths() {
   const res = await fetch('http://localhost:3000/api/events/')
 
   const events = await res.json()
-  const paths = events.map((evt) =>( { params: { slug: evt.slug } }))
+  const paths = events.map((evt) => ({ params: { slug: evt.slug } }))
   return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params: { slug } }) {
+  console.log('events from params', slug)
+  console.log(`http://localhost:3000/api/events/${slug}`)
   const res = await fetch(`http://localhost:3000/api/events/${slug}`)
-  //console.log('events from indu event',res)
+
   const events = await res.json()
+  console.log('events from indu event', events)
 
 
 

@@ -4,14 +4,14 @@ import Layout from '../../components/layout'
 import Eventitem from '@/components/eventitem'
 //import '../styles/globals.css'
 
-export default function EventsPage(events) {
+export default function EventsPage({events}) {
   //console.log("from client",events.events)
   return (
     
     <Layout>
       <h1>Events</h1>
-      {events.events.length===0 && <h3>No events to show</h3>}
-      {events.events.map((evt)=>(<Eventitem key={evt.id} evt={evt}></Eventitem>))}
+      {events.length===0 && <h3>No events to show</h3>}
+      {events.map((evt)=>(<Eventitem key={evt.id} evt={evt}></Eventitem>))}
       
      
     </Layout>
@@ -19,7 +19,7 @@ export default function EventsPage(events) {
 }
 
 export async function getStaticProps(){
-  const res=await fetch('http://localhost:3000/api/events')
+  const res=await fetch('http://localhost:3000/api/events/')
   const events=await res.json()
   //console.log("from server",events);
 
