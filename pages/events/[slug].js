@@ -1,7 +1,10 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/layout';
-
+import styles from '@/styles/event.module.css'
+import { FaPencilAlt, FaTimes } from 'react-icons'
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Id({ evt }) {
   const router = useRouter()
@@ -9,9 +12,27 @@ export default function Id({ evt }) {
   return (
     <Layout>
 
+      <div className={styles.event}>
+        <div className={styles.controls}>
+          <Link href={`events/edit/${evt.id}`}><p>Edit Event</p></Link>
+          <Link className={styles.delete} href='#' ><p>Delete Event</p></Link>
 
+        </div>
+      </div>
+      <h2>{evt.date} at {evt.time}</h2>
       <h1>{evt.name}</h1>
-      <button onClick={() => router.push('/')}>click me</button>
+
+      {evt.image && <Image src={evt.image} width={850} height={800}></Image>}
+      <h2>Performers:</h2>
+      <p>{evt.performers}</p>
+      <h2>Description:</h2>
+      <p>{evt.description}</p>
+      <h2>Venue:</h2>
+      <p>{evt.address}</p>
+      <Link href='/events'><p>Go Back</p></Link>
+
+
+
 
 
     </Layout>
