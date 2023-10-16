@@ -10,8 +10,8 @@ export default function EventsPage({events}) {
     
     <Layout>
       <h1>Events</h1>
-      {events.length===0 && <h3>No events to show</h3>}
-      {events.map((evt)=>(<Eventitem key={evt.id} evt={evt}></Eventitem>))}
+      {events.data.length===0 && <h3>No events to show</h3>}
+      {events.data.map((evt)=>(<Eventitem key={evt.id} evt={evt}></Eventitem>))}
       
      
     </Layout>
@@ -19,7 +19,7 @@ export default function EventsPage({events}) {
 }
 
 export async function getStaticProps(){
-  const res=await fetch('http://localhost:3000/api/events/')
+  const res=await fetch('http://127.0.0.1:1337/api/events?populate=*&_sort=date:ASC&_limit=3`/')
   const events=await res.json()
   //console.log("from server",events);
 

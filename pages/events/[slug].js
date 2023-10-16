@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function Id({ evt }) {
   const router = useRouter()
-  console.log(router);
+  //onsole.log(router);
   return (
     <Layout>
 
@@ -19,16 +19,16 @@ export default function Id({ evt }) {
 
         </div>
       </div>
-      <h2>{evt.date} at {evt.time}</h2>
-      <h1>{evt.name}</h1>
+      <h2>{evt.attributes.date} at {evt.attributes.time}</h2>
+      <h1>{evt.attributes.name}</h1>
 
-      {evt.image && <Image src={evt.image} width={850} height={800}></Image>}
+      {evt.attributes.image && <Image src={evt.attributes.image.data.attributes.formats.thumbnail.url} width={850} height={800}></Image>}
       <h2>Performers:</h2>
-      <p>{evt.performers}</p>
+      <p>{evt.attributes.performers}</p>
       <h2>Description:</h2>
-      <p>{evt.description}</p>
+      <p>{evt.attributes.description}</p>
       <h2>Venue:</h2>
-      <p>{evt.address}</p>
+      <p>{evt.attributes.address}</p>
       <Link href='/events'><p>Go Back</p></Link>
 
 
@@ -40,22 +40,23 @@ export default function Id({ evt }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:3000/api/events/')
+  const res = await fetch('http://127.0.0.1:1337/api/events?populate=*&_sort=date:ASC&_limit=3`/')
 
   const events = await res.json()
-  const paths = events.map((evt) => ({ params: { slug: evt.slug } }))
+  const paths = events.data.map((evt) => ({ params: { slug: evt.attributes.slug } }))
+  console.log("paths==============",paths);
   return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  console.log('events from params', slug)
-  console.log(`http://localhost:3000/api/events/${slug}`)
-  const res = await fetch(`http://localhost:3000/api/events/${slug}`)
+  //console.log('events from params', slug)
+  console.log(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate=*`)//`${API_URL}/api/events?filters[slug][$eq]=${slug}&populate=*`
+  const res = await fetch(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate=*`)
 
   const events = await res.json()
   console.log('events from indu event', events)
 
 
 
-  return { props: { evt: events[0] }, revalidate: 1 }
+  return { props: { evt: events.data[0] }, revalidate: 1 }
 }
