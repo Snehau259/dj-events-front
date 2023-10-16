@@ -19,10 +19,10 @@ export default function Id({ evt }) {
 
         </div>
       </div>
-      <h2>{evt.attributes.date} at {evt.attributes.time}</h2>
+      <h2>{new Date (evt.attributes.date).toLocaleDateString('en-US')} at {evt.attributes.time}</h2>
       <h1>{evt.attributes.name}</h1>
 
-      {evt.attributes.image && <Image src={evt.attributes.image.data.attributes.formats.thumbnail.url} width={850} height={800}></Image>}
+      {evt.attributes.image && <Image src={evt.attributes.image.data.attributes.formats.medium.url} width={850} height={800}></Image>}
       <h2>Performers:</h2>
       <p>{evt.attributes.performers}</p>
       <h2>Description:</h2>
