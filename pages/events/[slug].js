@@ -6,7 +6,6 @@ import { FaPencilAlt, FaTimes } from "react-icons";
 import Link from "next/link";
 import Image from "next/image";
 
-
 export default function Id({ evt }) {
   const router = useRouter();
   console.log("============event received from slug================", evt);
@@ -19,13 +18,12 @@ export default function Id({ evt }) {
     });
     const res = await data.json();
     router.push("/events");
-    
   };
   return (
     <Layout>
       <div className={styles.event}>
         <div className={styles.controls}>
-          <Link href={`events/edit/${evt.id}`}>
+          <Link href={`../events/edit/${evt.id}`}>
             <p>Edit Event</p>
           </Link>
           <a href="#" className={styles.delete} onClick={deleteEvent}>
