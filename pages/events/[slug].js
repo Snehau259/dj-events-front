@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function Id({ evt }) {
   const router = useRouter()
-  //onsole.log(router);
+  console.log("============event received from slug================",evt);
   return (
     <Layout>
 
@@ -44,17 +44,17 @@ export async function getStaticPaths() {
 
   const events = await res.json()
   const paths = events.data.map((evt) => ({ params: { slug: evt.attributes.slug } }))
-  console.log("paths==============",paths);
+  //console.log("paths==============",paths);
   return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params: { slug } }) {
   //console.log('events from params', slug)
-  console.log(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate=*`)//`${API_URL}/api/events?filters[slug][$eq]=${slug}&populate=*`
+  //console.log(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate=*`)//`${API_URL}/api/events?filters[slug][$eq]=${slug}&populate=*`
   const res = await fetch(`http://127.0.0.1:1337/api/events?filters[slug][$eq]=${slug}&populate=*`)
 
   const events = await res.json()
-  console.log('events from indu event', events)
+  console.log('=======events from indu event=========', events)
 
 
 
