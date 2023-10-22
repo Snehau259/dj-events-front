@@ -25,11 +25,12 @@ export default function EditEventPage({ event }) {
       ? event.attributes.image.data.attributes.formats.medium.url
       : null
   );
+  const [image, setImage] = useState(null);
+
   const router = useRouter();
+
   const handleSubmit = async (e) => {
-    console.log("======e========", e);
     e.preventDefault();
-    console.log("=====submitting values========", values);
     const data = { data: { ...values } };
     const res = await fetch(
       `http://127.0.0.1:1337/api/events/${event.id}/?[populate]=*`,
@@ -46,8 +47,39 @@ export default function EditEventPage({ event }) {
       router.push("/events/");
     }
   };
+
+  const handleImageSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("files", image);
+    formData.append("ref", "api::event.event");
+    formData.append("refId", event.id);
+    formData.append("field", "image");
+
+    const res = await fetch("http://127.0.0.1:1337/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+    if (res.ok) {
+      imageupload();
+    }
+  };
+
+  const imageupload = async (e) => {
+    const res = await fetch(
+      `http://127.0.0.1:1337/api/events/${event.id}/?[populate]=*`
+    );
+    const eventData = await res.json();
+    console.log("========event from imageupload=========", eventData);
+    setImagePreview(eventData.data.attributes.image.data.attributes.formats.medium.url);
+  };
+
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    setImage(e.target.files[0]);
+  };
+
   const handleInputChange = (e) => {
-    console.log("=======target========", e.target.value);
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
@@ -138,11 +170,16 @@ export default function EditEventPage({ event }) {
           <input type="submit" value="Update Event" className="btn"></input>
         </div>
       </form>
-      
-      <Image src={imagePreview?imagePreview:null} width={300} height={200}></Image>
-      <div >
-      <button className="btn-secondary">set image</button>
-      </div>
+
+      <Image
+        src={imagePreview ? imagePreview : null}
+        width={300}
+        height={200}
+      ></Image>
+      <form onSubmit={handleImageSubmit}>
+        <input type="file" onChange={handleFileChange}></input>
+        <input type="submit" value="Upload"></input>
+      </form>
     </Layout>
   );
 }
@@ -152,6 +189,6 @@ export async function getServerSideProps({ params: { id } }) {
     `http://127.0.0.1:1337/api/events/${id}/?[populate]=*`
   );
   const event = await res.json();
-  console.log("========event from edit page==================", event);
+  //console.log("========event from edit page==================", event);
   return { props: { event: event.data } };
 }
